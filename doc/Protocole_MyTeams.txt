@@ -1,0 +1,102 @@
+Create New User
+    -> USER_C "Username"
+        <- 301
+    -> USER_CP "Password"
+        <- 200 (Success) / 502 (Failure)
+
+Connect User
+    -> USER_CO "Username"
+        <- 301
+    -> USER_CP "Password"
+        <- 200 "UUID" (Connected) / 503 (Error)
+
+Logout User
+    -> USER_L "UUID"
+        <- 200 (Logged out) / 501 (Error)
+
+Get User Status
+    -> USER_G
+        <- 200 [(uuid) (CONNECTED/NOT CONNECTED)]
+
+
+Team Commands
+Create Team
+    -> TEAM_C "team_name"
+        <- 200 "team_id" (Team created) / 511 (Error)
+Join Team
+    -> TEAM_J "team_id"
+        <- 200 (Joined) / 512 (Error)
+
+Leave Team
+    -> TEAM_L "team_id"
+        <- 200 (Left) / 513 or 514 (Error)
+
+Delete Team
+    -> TEAM_D "team_id"
+        <- 200 (Deleted) / 401 or 513 (Error)
+
+List Teams
+    -> TEAM_G
+        <- 200 "team_id", ... / 515 (Error)
+
+
+Channel Commands
+    
+Create Channel
+    -> CHANNEL_C "channel_name"
+        <- 200 "channel_id" (Channel created) / 521 (Error)
+
+Delete Channel
+    -> CHANNEL_D "channel_id"
+        <- 200 (Deleted) / 401 or 523 (Error)
+
+List Channels in Team
+    -> CHANNEL_GC
+        <- 200 [channel_id], ... / 522 or 401 (Error)
+
+Thread Commands
+
+Create Thread
+    -> THREAD_C "message_id"
+        <- 200 [thread_id] (Thread created) / 531 (Error)
+
+Delete Thread
+    -> THREAD_D "thread_id"
+        <- 200 (Deleted) / 401 or 533 (Error)
+
+List Threads in Channel
+    -> THREAD_G
+        <- 200 [thread_id], ... / 532 or 401 (Error)
+
+
+Personal Commands
+
+Create Personal Message
+    -> PM_C "user_uuid"
+        <- 200 [pm_id] (Message created) / 531 (Error)
+
+List Personal Messages
+    -> PM_G
+        <- 200 [pm_id] / 531 (Error)
+
+
+Other Commands
+
+Help Command
+    -> HELP
+        <- 200 "implemented command"
+
+No Operation
+    -> NOOP
+        <- 200
+
+Version Check
+    -> VERSION
+        <- 200 "version"
+
+
+Response Messages
+200: Success
+300-399: Requests pending
+400-499: Client errors
+500-599: Server errors
